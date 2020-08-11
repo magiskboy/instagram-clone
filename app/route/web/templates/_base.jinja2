@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{{ url_for('web.static', filename='vendor/bootstrap-4.5.2-dist/css/bootstrap.min.css') }}">
+    {% block style %} {% endblock %}
+    <title>{{ title }}</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        {% block main %} {% endblock %}
+      </div>
+    </div>
+    <script src="{{ url_for('web.static', filename='vendor/jquery-3.5.1.slim.min.js') }}"></script>
+    <script src="{{ url_for('web.static', filename='vendor/popper.min.js') }}"></script>
+    <script src="{{ url_for('web.static', filename='vendor/bootstrap-4.5.2-dist/js/bootstrap.min.js') }}"></script>
+        {% block script %} {% endblock %}
+  </body>
+</html>
