@@ -1,0 +1,13 @@
+{% from "macro/toastr.jinja2" import toastr %}
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div aria-live="polite" aria-atomic="true"
+        style="position: absolute; top: 0; right: 0; margin-right: 2em;">
+      {% for title, message in messages %}
+        {% call toastr(title, 3000) %}
+        {{ message }}
+        {% endcall %}
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}

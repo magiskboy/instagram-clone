@@ -4,19 +4,23 @@ from sqlalchemy import Column
 from sqlalchemy import Integer
 from sqlalchemy import String
 from sqlalchemy import Boolean
+from flask_login import UserMixin
 from werkzeug.security import generate_password_hash
 from werkzeug.security import check_password_hash
 from . import db
 from . import BaseModel
 
 
-class UserModel(db.Model, BaseModel):
+class UserModel(db.Model, BaseModel, UserMixin):
     __tablename__ = 'users'
 
     username = Column(String(20), nullable=False, unique=True)
     email = Column(String(255), nullable=False, unique=True)
     password_hash = Column(String(128), nullable=False)
     is_active = Column(Boolean())
+
+    def get_id(self):
+        return self.id_
 
     @property
     def password(self):

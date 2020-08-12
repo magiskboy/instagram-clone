@@ -9,6 +9,7 @@
     <title>{{ title }}</title>
   </head>
   <body class="pt-md-3 pt-lg-3 pt-sm-1">
+    {% include "include/flash.jinja2" %}
     <div class="container">
       <div class="row justify-content-center">
         {% block main %} {% endblock %}
@@ -17,6 +18,11 @@
     <script src="{{ url_for('web.static', filename='vendor/jquery-3.5.1.slim.min.js') }}"></script>
     <script src="{{ url_for('web.static', filename='vendor/popper.min.js') }}"></script>
     <script src="{{ url_for('web.static', filename='vendor/bootstrap-4.5.2-dist/js/bootstrap.min.js') }}"></script>
-        {% block script %} {% endblock %}
+    <script>
+      $(document).ready(function(){
+        $('.toast').toast('show');
+      });
+    </script>
+    {% block script %} {% endblock %}
   </body>
 </html>
