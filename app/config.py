@@ -1,6 +1,7 @@
 #coding=utf-8
 
 import os
+import secrets
 from sqlalchemy.engine.url import URL
 
 
@@ -15,11 +16,15 @@ class BaseConfig:
 
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 
+    SECRET_KEY = secrets.token_hex(16)
+
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
 
     SQLALCHEMY_DATABASE_URI = f'sqlite:///{os.path.join(BaseConfig.ROOT, "db.sqlite3")}'
+
+    SECRET_KEY = '0'*16
 
 
 class TestingConfig(BaseConfig):

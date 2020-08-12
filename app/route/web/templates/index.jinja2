@@ -1,7 +1,42 @@
 {% extends "_base.jinja2" %}
 
+{% block style %}
+<style>
+#main-index > div {
+  width: 50%;
+}
+
+</style>
+{% endblock %}
+
 {% block main %}
-  <div class="col-md-12">
-    <h2>Hello Con cac</h2>
+  <div class="col col-lg-8 col-md-8 col-sm-10 col-xs-12 d-flex justify-content-between" id="main-index" style="margin-top: 15vh">
+    <div class="d-block d-xs-none">
+      <img src="{{ url_for('web.static', filename='images/index-image.jpg') }}">
+    </div>
+    <div class="d-block border">
+      <div class="box p-lg-3 p-md-3">
+        <div class="top mb-5">
+          <h2 class="text-center">Doge Showcase</h2>
+        </div>
+        <div class="content">
+          <form>
+            <div class="form-group">
+              {{ login_form.username(placeholder="Username or Email ...") }}
+            </div>
+            <div class="form-group">
+              {{ login_form.password(placeholder="Password")  }}
+            </div>
+            {{ login_form.submit(class="btn btn-primary btn-block") }}
+          </form>
+
+          <hr>
+
+          <div class="extend">
+            Đăng nhập bằng cái đ*o gì cũng được
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 {% endblock %}

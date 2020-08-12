@@ -2,6 +2,8 @@
 
 from flask import Blueprint
 from flask import render_template
+from .form import LoginForm
+from .form import RegisterForm
 
 
 bp = Blueprint('web', __name__,
@@ -12,4 +14,8 @@ bp = Blueprint('web', __name__,
 
 @bp.route('/')
 def index():
-    return render_template('index.jinja2')
+    context = {
+        'login_form': LoginForm(),
+        'register_form': RegisterForm(),
+    }
+    return render_template('index.jinja2', **context)
