@@ -18,11 +18,16 @@ class BaseConfig:
 
     SECRET_KEY = secrets.token_hex(16)
 
+    CACHE_TYPE = 'simple'
+
+    CACHE_DEFAULT_TIMEOUT = 300
+
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
 
-    SQLALCHEMY_DATABASE_URI = f'sqlite:///{os.path.join(BaseConfig.ROOT, "db.sqlite3")}'
+    # SQLALCHEMY_DATABASE_URI = f'sqlite:///{os.path.join(BaseConfig.ROOT, "db.sqlite3")}'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:password@localhost:3306/inst'
 
     SECRET_KEY = '0'*16
 

@@ -1,10 +1,22 @@
 #coding=utf-8
 
 from ..repository import user as user_repo
+from ..helper import exclude_unknown_args
+from ..helper import catch_error
 
 
-def get_and_verify_user(username_or_email, password):
-    user = user_repo.get_user_by_username_or_email(username_or_email)
+@catch_error()
+@exclude_unknown_args
+def get_and_verify_user(username, password):
+    user = user_repo.get_user_by_username_or_email(username)
     if user and user.verify_password(password):
         return user
-    return None
+    raise ValueError('Sai tài khoản')
+
+
+@catch_error()
+def register_user(data):
+    existed_user_fn = user_repo.check_user_existed
+    if existed_user_fn(data['username']) or existed_user_fn(data['email']):
+        raise ValueError('username hoặc email đã được sử dụng')
+    return user_repo.create_user(data)

@@ -16,6 +16,11 @@
           <div class="form-group">
             {{ login_form.password(placeholder="Password")  }}
           </div>
+          <div class="form-check-inline">
+            <label>
+              {{ login_form.remember(class="form-check-input") }} {{ login_form.remember.label() }}
+            </label>
+          </div>
           {{ login_form.submit(class="btn btn-primary btn-block") }}
         </form>
         <hr>

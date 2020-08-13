@@ -1,11 +1,20 @@
-{% from "macro/toastr.jinja2" import toastr %}
+{% from "_macro.jinja2" import toastr %}
 {% with messages = get_flashed_messages() %}
   {% if messages %}
     <div aria-live="polite" aria-atomic="true"
         style="position: absolute; top: 0; right: 0; margin-right: 2em;">
-      {% for title, message in messages %}
-        {% call toastr(title, 3000) %}
-        {{ message }}
+      {% for message in messages %}
+        {% if type(message) == "tuple" %}
+          {% set title, text = message %}
+          {% if type(text) == "list" %}
+            {% set text = text[0] %}
+          {% endif %}
+        {% else %}
+          {% set title, text = "", message %}
+        {% endif %}
+
+        {% call toastr(title, 5000) %}
+        {{ text}}
         {% endcall %}
       {% endfor %}
     </div>
