@@ -4,7 +4,7 @@
   <div class="col col-lg-6 col-md-6 col-sm-8 col-xs-12 d-flex justify-content-center">
     <div class="d-block border p-4" style="width: 80%">
       <h2 class="text-center mb-5 border-bottom pb-3">Register</h2>
-      <form method="POST" action="{{ url_for("web.register") }}">
+      <form method="POST" action="{{ url_for("auth.register") }}">
         {{ register_form.csrf_token }}
         <div class="form-group">
           <strong>{{ register_form.username.label() }}</strong>
@@ -29,7 +29,7 @@
         {{ register_form.submit(class="btn btn-primary btn-block") }}
       </form>
       <hr class="p-2">
-      <p>Bạn đã có tài khoản? <a href="{{ url_for("web.index") }}">Đăng nhập</a></p>
+      <p>Bạn đã có tài khoản? <a href="{{ url_for("auth.index") }}">Đăng nhập</a></p>
     </div>
   </div>
 {% endblock %}

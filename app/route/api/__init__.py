@@ -1,12 +1,15 @@
 #coding=utf-8
 
-from flask import Blueprint
+from flask import Flask
 from flask import jsonify
 
 
-bp = Blueprint('api', __name__)
 
+def create_app():
+    app = Flask(__name__)
 
-@bp.route('/')
-def index():
-    return jsonify(message='Lo con cac')
+    @app.route('/')
+    def index():
+        return jsonify(message='Lo con cac')
+
+    return app

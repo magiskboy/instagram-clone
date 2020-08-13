@@ -3,12 +3,12 @@
 {% block main %}
   <div class="col col-lg-8 col-md-8 col-sm-10 col-xs-12 d-flex justify-content-between">
     <div class="d-block d-xs-none flex-fill">
-      <img src="{{ url_for('web.static', filename='images/index-image.jpg') }}">
+      <img src="{{ url_for('auth.static', filename='images/index-image.jpg') }}">
     </div>
     <div class="d-block border flex-fill">
       <div class="box p-lg-3 p-md-3">
         <h2 class="text-center mb-5">Doge Showcase</h2>
-        <form method="POST" action="{{ url_for("web.index") }}">
+        <form method="POST" action="{{ url_for("auth.index") }}">
           {{ login_form.csrf_token }}
           <div class="form-group">
             {{ login_form.username(placeholder="Username or Email ...") }}
@@ -24,7 +24,7 @@
           {{ login_form.submit(class="btn btn-primary btn-block") }}
         </form>
         <hr>
-        <p>Bạn không có tài khoản? <a href="{{ url_for("web.register") }}">Đăng ký</a></p>
+        <p>Bạn không có tài khoản? <a href="{{ url_for("auth.register") }}">Đăng ký</a></p>
       </div>
     </div>
   </div>

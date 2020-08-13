@@ -1,28 +1,33 @@
 #coding=utf-8
 
 from flask import Flask
+from werkzeug.middleware.dispatcher import DispatcherMiddleware
 from flask_migrate import Migrate
-from ..config import get_config
-from ..model import db
+
+from .web import create_app as create_web
+from .api import create_app as create_api
 from ..auth import login_manager
+from ..model import db
 from ..caching import cache
-from . import web
-from .web import template_global
-from . import api
+from ..config import get_config
 
 
 def create_app(config_name=None):
     app = Flask(__name__)
-    app.config.from_object(get_config(config_name or app.env))
-
+    config_name = config_name or app.env
+    app.config.from_object(get_config(config_name))
 
     db.init_app(app)
     Migrate(app, db)
-    login_manager.init_app(app)
     cache.init_app(app)
-    template_global.init_app(app)
+    login_manager.init_app(app)
 
-    app.register_blueprint(web.bp, url_prefix='/')
-    app.register_blueprint(api.bp, url_prefix='/api')
+    web_app = create_web()
+    api_app = create_api()
+    web_app.login_manager = login_manager
+    api_app.login_manager = login_manager
+    app.wsgi_app = DispatcherMiddleware(web_app, mounts={
+        '/api': api_app,
+    })
 
     return app
