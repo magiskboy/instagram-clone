@@ -5,7 +5,6 @@ from sqlalchemy import or_
 from sqlalchemy import exists
 from ..model import db
 from ..model import UserModel
-from ..caching import cache
 
 
 @lru_cache
@@ -23,8 +22,6 @@ def create_user(data):
     return new_user
 
 
-#TODO: need cache
-@cache.memoize(timeout=300)
 def check_user_existed(username_or_email):
     return db.session.query(exists().where(or_(
         UserModel.username == username_or_email,

@@ -12,13 +12,13 @@ from flask_login import logout_user
 from flask_login import current_user
 from .form import LoginForm
 from .form import RegisterForm
-from ...service import user as user_service
-from ...helper import flash_and_redirect
+from ....service import user as user_service
+from ....helper import flash_and_redirect
 
 
 bp = Blueprint('auth', __name__,
                template_folder='templates',
-               static_folder='static/auth',
+               static_folder='static',
                static_url_path='/static/auth')
 
 
@@ -29,7 +29,7 @@ def index():
     if request.method == 'GET':
         if current_user.is_authenticated:
             return redirect(url_for('core.feed'))
-        return render_template('auth/index.jinja2', login_form=login_form)
+        return render_template('index.jinja2', login_form=login_form)
 
     if login_form.validate_on_submit():
         ret, success = user_service.get_and_verify_user(**login_form.data)
@@ -45,7 +45,7 @@ def index():
 def register():
     register_form = RegisterForm()
     if request.method == 'GET':
-        return render_template('auth/register.jinja2', register_form=register_form)
+        return render_template('register.jinja2', register_form=register_form)
 
     if register_form.validate_on_submit():
         ret, success = user_service.register_user(register_form.data)

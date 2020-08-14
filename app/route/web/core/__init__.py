@@ -2,6 +2,7 @@
 
 from flask import Blueprint
 from flask import render_template
+from flask_login import login_required
 
 
 bp = Blueprint('core', __name__,
@@ -11,5 +12,6 @@ bp = Blueprint('core', __name__,
 
 
 @bp.route('/feed')
+@login_required
 def feed():
-    return render_template('core/feed.jinja2')
+    return render_template('feed.jinja2')
