@@ -7,11 +7,13 @@ from ..helper import catch_error
 
 @catch_error()
 @exclude_unknown_args
-def get_and_verify_user(username, password):
+def get_user(username, password=None, verify=False):
     user = user_repo.get_user_by_username_or_email(username)
-    if user and user.verify_password(password):
-        return user
-    raise ValueError('Sai tài khoản')
+    if verify:
+        if user and user.verify_password(password):
+            return user
+        raise ValueError('Sai tài khoản')
+    return user
 
 
 @catch_error()

@@ -1,4 +1,4 @@
-{% from "_macro.jinja2" import toastr %}
+{% from "macro/render_toastr.jinja2" import toastr %}
 {% with messages = get_flashed_messages() %}
   {% if messages %}
     <div aria-live="polite" aria-atomic="true"

@@ -32,7 +32,7 @@ def index():
         return render_template('index.jinja2', login_form=login_form)
 
     if login_form.validate_on_submit():
-        ret, success = user_service.get_and_verify_user(**login_form.data)
+        ret, success = user_service.get_user(**login_form.data, verify=True)
         if success:
             ret.is_active = True
             login_user(ret)

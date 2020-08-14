@@ -1,16 +1,35 @@
-<div class="row d-flex justify-content-center">
-  <div class="col col-lg-10 col-md-10 col-sm-10 col-xs-12">
-    <nav class="d-flex justify-content-between align-items-center" style="height: 70px">
-      <div>Doge Showcase</div>
-      <div>
-        <input type="text" class="form-control" placeholder="Search" />
-      </div>
-      <div style="font-size: 19px; width: 20%; display: grid; grid-template-columns: repeat(4, 1fr)">
-        <a src="#" class="d-block"><i class="fas fa-home"></i></a>
-        <a src="#" class="d-block"><i class="fas fa-bell"></i></a>
-        <a src="#" class="d-block"><i class="fas fa-envelope"></i></a>
-        <a src="#" class="d-block"><img src="" /></a>
-      </div>
-    </nav>
+<nav class="border-bottom p">
+  <div class="left">
+    <img src="{{ url_for("static", filename="images/logo.jpg") }}" >
   </div>
-</div>
+  <div class="center">
+    <div class="search-tool">
+      <input type="text" class="border rounded" placeholder="Search" />
+      {% if results %}
+      <div class="search-result">
+        {% for result in results %}
+        <div class="item-result">
+          <div class="left"><img src={{ url_for("static", filename="images/logo.jpg") }} width="48" height="48"></div>
+          <div class="right">
+            <a href="#">{{ result.title }}</a>
+            <p>{{ result.text }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="right">
+    <a href="{{ url_for("core.feed") }}" title="New feed"><i class="fas fa-home"></i></a>
+    <a href="#" title="Message"><i class="fas fa-envelope"></i></a>
+    <a href="#" title="{{ current_user.fullname }}">
+    {% if current_user.image_url %}
+      <img src="{{ current_user.image_url }}">
+    {% else %}
+      <li class="fas fa-user-circle"></li>
+    {% endif %}
+    </a>
+    <a href="{{ url_for("auth.logout")}}" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+</nav>

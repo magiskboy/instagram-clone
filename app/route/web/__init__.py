@@ -10,6 +10,7 @@ from ..config import get_config
 
 from .auth import bp as auth_bp
 from .core import bp as core_bp
+from .user import bp as user_bp
 
 
 login_manager = LoginManager()
@@ -34,5 +35,6 @@ def create_app(config_name=None):
 
     app.register_blueprint(auth_bp, url_prefix='/')
     app.register_blueprint(core_bp, url_prefix='/')
+    app.register_blueprint(user_bp, url_prefix='/users')
 
     return app
