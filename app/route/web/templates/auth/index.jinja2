@@ -1,9 +1,9 @@
-{% extends "_base.jinja2" %}
+{% extends "base.jinja2" %}
 
 {% block main %}
   <div class="col col-lg-8 col-md-8 col-sm-10 col-xs-12 d-flex justify-content-between">
     <div class="d-block d-xs-none flex-fill">
-      <img src="{{ url_for('auth.static', filename='images/index-image.jpg') }}">
+      <img src="{{ url_for('static', filename='images/index-image.jpg') }}">
     </div>
     <div class="d-block border flex-fill">
       <div class="box p-lg-3 p-md-3">

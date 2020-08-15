@@ -18,15 +18,15 @@ from . import QueryWithSoftDelete
 class FriendRelationship(BaseModel, db.Model):
     __tablename__ = 'friend_relationships'
 
-    left_id = Column(Integer(), ForeignKey('users.id'), nullable=False)
-    right_id = Column(Integer(), ForeignKey('users.id'), nullable=False)
+    left_id = Column(Integer(), ForeignKey('users.id_'), nullable=False)
+    right_id = Column(Integer(), ForeignKey('users.id_'), nullable=False)
 
 
 class FollowRelationship(BaseModel, db.Model):
     __tablename__ = 'follow_relationships'
 
-    left_id = Column(Integer(), ForeignKey('users.id'), nullable=False)
-    right_id = Column(Integer(), ForeignKey('users.id'), nullable=False)
+    left_id = Column(Integer(), ForeignKey('users.id_'), nullable=False)
+    right_id = Column(Integer(), ForeignKey('users.id_'), nullable=False)
 
 
 class UserModel(BaseModel, UserMixin, db.Model):
@@ -44,14 +44,22 @@ class UserModel(BaseModel, UserMixin, db.Model):
     deleted = db.Column(db.Boolean(), default=False)
 
     friends = relationship('UserModel',
-                           secondary=FriendRelationship,
+                           secondary=FriendRelationship.__table__,
                            primaryjoin='UserModel.id_ == FriendRelationship.left_id',
-                           secondaryjoin='FriendRelationship.right_id == UserModel.id_')
+                           secondaryjoin='and_(FriendRelationship.right_id == UserModel.id_,'
+                                              'not_(UserModel.deleted))')
 
     follwings = relationship('UserModel',
-                             secondary=FollowRelationship,
+                             secondary=FollowRelationship.__table__,
                              primaryjoin='UserModel.id_ == FollowRelationship.left_id',
-                             secondaryjoin='FollowRelationship.right_id == UserModel.id_')
+                             secondaryjoin='and_(FollowRelationship.right_id == UserModel.id_,'
+                                                'not_(UserModel.deleted))')
+
+    follwers = relationship('UserModel',
+                            secondary=FollowRelationship.__table__,
+                            primaryjoin='UserModel.id_ == FollowRelationship.right_id',
+                            secondaryjoin='and_(FollowRelationship.left_id == UserModel.id_,'
+                                                'not_(UserModel.deleted))')
 
     def get_id(self):
         return self.id_

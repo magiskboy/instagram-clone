@@ -5,10 +5,10 @@ from wtforms.widgets.html5 import EmailInput
 from wtforms.validators import Required
 from wtforms.validators import Regexp
 from wtforms.validators import EqualTo
-from ..form import StringField
-from ..form import PasswordField
-from ..form import BooleanField
-from ..form import SubmitField
+from ._base import StringField
+from ._base import PasswordField
+from ._base import BooleanField
+from ._base import SubmitField
 
 
 USERNAME_REGEX = r'^[a-zA-Z0-9_]{6,20}$'

@@ -1,5 +1,6 @@
 #coding=utf-8
 
+import os
 from flask import Blueprint
 from flask import render_template
 from flask import request
@@ -10,16 +11,14 @@ from flask_login import login_user
 from flask_login import login_required
 from flask_login import logout_user
 from flask_login import current_user
-from .form import LoginForm
-from .form import RegisterForm
-from ....service import user as user_service
-from ....helper import flash_and_redirect
+from .form.auth import LoginForm
+from .form.auth import RegisterForm
+from ...service import user as user_service
+from ...helper import flash_and_redirect
 
 
 bp = Blueprint('auth', __name__,
-               template_folder='templates',
-               static_folder='static',
-               static_url_path='/static/auth')
+               template_folder=os.path.join('templates', 'auth'))
 
 
 @bp.route('/', methods=['GET', 'POST'])

@@ -2,9 +2,12 @@
 
 from functools import lru_cache
 from sqlalchemy import or_
+from sqlalchemy import func
 from sqlalchemy import exists
 from ..model import db
 from ..model import UserModel
+from ..model import FriendRelationship
+from ..model import FollowRelationship
 
 
 @lru_cache
@@ -27,3 +30,24 @@ def check_user_existed(username_or_email):
         UserModel.username == username_or_email,
         UserModel.email == username_or_email,
     ))).scalar()
+
+
+def get_personal_info(username):
+    ret = db.session.query(
+        UserModel,
+        func.count(FriendRelationship.id_).label('n_friends'),
+        func.count(FollowRelationship.id_).label('n_followings'),
+    ).join(
+        FriendRelationship,
+        or_(
+            UserModel.id_ == FriendRelationship.left_id,
+            UserModel.id_ == FriendRelationship.right_id,
+        )
+    ).join(
+        FollowRelationship,
+        UserModel.id_ == FollowRelationship.left_id
+    ).filter(
+        UserModel.username == username
+    ).first()
+
+    return ret

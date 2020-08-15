@@ -8,20 +8,20 @@
     {% else %}
       <title>Instagram</title>
     {% endif %}
-    {% include "include/style_loader.jinja2" %}
+    {% include "_include/style_loader.jinja2" %}
     {% block style %} {% endblock %}
   </head>
   <body class="pt-md-3 pt-lg-3 pt-sm-1">
-    {% include "include/flash.jinja2" %}
+    {% include "_include/flash.jinja2" %}
     <div class="container">
       {% if current_user.is_authenticated %}
-        {% include "include/navbar.jinja2" %}
+        {% include "_include/navbar.jinja2" %}
       {% endif %}
       <div class="row justify-content-center">
         {% block main %} {% endblock %}
       </div>
     </div>
-    {% include "include/js_loader.jinja2" %}
+    {% include "_include/js_loader.jinja2" %}
     {% block script %} {% endblock %}
   </body>
 </html>

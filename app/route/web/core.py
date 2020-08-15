@@ -1,14 +1,13 @@
 #coding=utf-8
 
+import os
 from flask import Blueprint
 from flask import render_template
 from flask_login import login_required
 
 
 bp = Blueprint('core', __name__,
-               template_folder='templates',
-               static_folder='static/core',
-               static_url_path='/static/core')
+               template_folder=os.path.join('templates', 'core'))
 
 
 @bp.route('/feed')

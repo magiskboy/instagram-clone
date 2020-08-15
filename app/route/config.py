@@ -23,6 +23,10 @@ class BaseConfig:
 
     SECRET_KEY = secrets.token_hex(SECRET_KEY_LEN)
 
+    AVATAR_DIR = os.path.join('storage', 'profiles')
+
+    PHOTO_DIR = os.path.join('storage', 'photos')
+
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True

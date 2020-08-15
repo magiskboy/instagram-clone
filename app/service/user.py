@@ -22,3 +22,8 @@ def register_user(data):
     if existed_user_fn(data['username']) or existed_user_fn(data['email']):
         raise ValueError('username hoặc email đã được sử dụng')
     return user_repo.create_user(data)
+
+
+@catch_error
+def get_personal_info(username):
+    return user_repo.get_personal_info(username)

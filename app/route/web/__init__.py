@@ -3,7 +3,7 @@
 from secrets import token_hex
 from flask import Flask
 from flask_login import LoginManager
-from . import template
+from flask_migrate import Migrate
 from ...model import UserModel
 from ...model import db
 from ..config import get_config
@@ -20,6 +20,10 @@ def load_user(user_id):
     return UserModel.query.get(user_id)
 
 
+def template_init_app(app):
+    # get type name of object
+    app.jinja_env.globals.update({'type': lambda x: x.__class__.__name__})
+
 
 def create_app(config_name=None):
     global login_manager
@@ -31,7 +35,8 @@ def create_app(config_name=None):
 
     db.init_app(app)
     login_manager.init_app(app)
-    template.init_app(app)
+    template_init_app(app)
+    Migrate(app, db)
 
     app.register_blueprint(auth_bp, url_prefix='/')
     app.register_blueprint(core_bp, url_prefix='/')
