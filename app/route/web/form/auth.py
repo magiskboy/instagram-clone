@@ -23,7 +23,8 @@ class LoginForm(FlaskForm):
 
 
 class RegisterForm(LoginForm):
-    fullname = StringField('Fullname', validators=[Required()])
+    fullname = StringField('Fullname', validators=[Required()], render_kw={'placeholder': 'Lmao'})
     email = StringField('Email', validators=[Required()], widget=EmailInput())
     confirm = PasswordField(validators=[EqualTo('password')])
     submit = SubmitField('Register')
+    remember = None

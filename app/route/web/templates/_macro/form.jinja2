@@ -1,0 +1,42 @@
+{% macro render_input(field, hide_label=False) %}
+<div class="form-group">
+  {% if not hide_label %}
+    <strong>{{ field.label }}</strong>
+  {% endif %}
+  {{ field(class="form-control")  }}
+</div>
+{% endmacro %}
+
+{% macro render_checkbox(field) %}
+<div class="form-check-inline">
+  <label>
+    {{ field(class="form-check-input") }} {{ field.label() }}
+  </label>
+</div>
+{% endmacro %}
+
+{% macro render_action(field) %}
+{{ field(class="btn btn-primary btn-block") }}
+{% endmacro %}
+
+
+{% macro render_form(form, action, method="POST", hide_label=False) %}
+
+<form method="{{ method }}" action="{{ action }}">
+  {{caller()}}
+  {{ form.csrf_token }}
+  {% for field in form %}
+    {% if field.type != "HiddenField" and field.type != "CSRFTokenField" %}
+      {% if field.type == "BooleanField" %}
+        {{ render_checkbox(field) }}
+      {% elif field.type == "SubmitField" %}
+        {{ render_action(field) }}
+      {% elif field.type == "StringField" %}
+        {{ render_input(field, hide_label) }}
+      {% else %}
+        {{ render_input(field, hide_label) }}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+</form>
+{% endmacro %}
