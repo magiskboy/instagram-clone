@@ -6,6 +6,7 @@ from flask import render_template
 from flask import redirect
 from flask import url_for
 from flask import request
+from flask import abort
 from flask_login import login_required
 from ...helper import flash_and_redirect
 from ...service import user as user_service
@@ -19,11 +20,10 @@ bp = Blueprint('user', __name__,
 @bp.route('/<string:username>')
 @login_required
 def userinfo(username):
-    user, n_friends, n_followers = user_service.get_personal_info(username)
-    return render_template('info.jinja2',
-                           user=user,
-                           n_friends=n_friends,
-                           n_followers=n_followers)
+    user, success = user_service.get_personal_info(username)
+    if not user:
+        abort(404)
+    return render_template('info.jinja2', user=user)
 
 
 @bp.route('/edit', methods=['GET', 'POST'])

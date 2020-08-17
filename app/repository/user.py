@@ -4,6 +4,7 @@ from functools import lru_cache
 from sqlalchemy import or_
 from sqlalchemy import func
 from sqlalchemy import exists
+from sqlalchemy.orm import aliased
 from ..model import db
 from ..model import UserModel
 from ..model import FriendRelationship
@@ -33,21 +34,4 @@ def check_user_existed(username_or_email):
 
 
 def get_personal_info(username):
-    ret = db.session.query(
-        UserModel,
-        func.count(FriendRelationship.id_).label('n_friends'),
-        func.count(FollowRelationship.id_).label('n_followings'),
-    ).join(
-        FriendRelationship,
-        or_(
-            UserModel.id_ == FriendRelationship.left_id,
-            UserModel.id_ == FriendRelationship.right_id,
-        )
-    ).join(
-        FollowRelationship,
-        UserModel.id_ == FollowRelationship.left_id
-    ).filter(
-        UserModel.username == username
-    ).first()
-
-    return ret
+    return get_user_by_username_or_email(username)

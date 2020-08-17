@@ -24,6 +24,6 @@ def register_user(data):
     return user_repo.create_user(data)
 
 
-@catch_error
+@catch_error()
 def get_personal_info(username):
     return user_repo.get_personal_info(username)

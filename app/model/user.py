@@ -41,21 +41,28 @@ class UserModel(BaseModel, UserMixin, db.Model):
     phone_number = Column(String(11))
     photo_url = Column(String(255))
     gender = Column(Boolean())
+    n_friends = Column(Integer(), default=0)
+    n_followers = Column(Integer(), default=0)
+    n_followings = Column(Integer(), default=0)
+    n_posts = Column(Integer(), default=0)
     deleted = db.Column(db.Boolean(), default=False)
 
     friends = relationship('UserModel',
+                           lazy='noload',
                            secondary=FriendRelationship.__table__,
                            primaryjoin='UserModel.id_ == FriendRelationship.left_id',
                            secondaryjoin='and_(FriendRelationship.right_id == UserModel.id_,'
                                               'not_(UserModel.deleted))')
 
-    follwings = relationship('UserModel',
+    followings = relationship('UserModel',
+                             lazy='noload',
                              secondary=FollowRelationship.__table__,
                              primaryjoin='UserModel.id_ == FollowRelationship.left_id',
                              secondaryjoin='and_(FollowRelationship.right_id == UserModel.id_,'
                                                 'not_(UserModel.deleted))')
 
-    follwers = relationship('UserModel',
+    followers = relationship('UserModel',
+                            lazy='noload',
                             secondary=FollowRelationship.__table__,
                             primaryjoin='UserModel.id_ == FollowRelationship.right_id',
                             secondaryjoin='and_(FollowRelationship.left_id == UserModel.id_,'
